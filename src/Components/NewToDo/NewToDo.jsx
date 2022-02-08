@@ -4,8 +4,10 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Button } from "primereact/button";
 import { PrimeIcons } from "primereact/api";
+import { createToDo } from "../../Services/api";
 
 export default function NewToDo() {
+  const [addToDo, setAddToDo] = useState(false);
   const [toDoInfo, setToDoInfo] = useState({
     title: "",
     date: "",
@@ -15,13 +17,17 @@ export default function NewToDo() {
 
   
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     return setToDoInfo(() => {
       const auxValues = { ...toDoInfo };
       auxValues[e.target.name] = e.target.value
       return auxValues;
     });
   };
+
+  const onSubmit = async () => {
+    return await createToDo(toDoInfo.title, toDoInfo.date, toDoInfo.priority, toDoInfo.isCompleted)
+  }
 
   const priorityOptions = [
     { label: "Alta", value: "high" },
@@ -42,7 +48,10 @@ export default function NewToDo() {
           </span>
           <Dropdown id="priority" name={"priority"} options={priorityOptions} onChange={handleChange} />
           <Calendar id="date" dateFormat="dd/mm/yy" name={"date"} onChange={handleChange} />
-          <Button label="Adicionar"></Button>
+          <Button 
+          label="Adicionar"
+          onClick={() => onSubmit()}
+          ></Button>
         </section>
     </section>
   )
