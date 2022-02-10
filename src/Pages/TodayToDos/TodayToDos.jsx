@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import NewToDo from "../../Components/NewToDo/NewToDo";
 import ToDo from "../../Components/ToDo/ToDo";
 import { getToDo, deleteToDo, updateToDo } from "../../Services/api";
 
@@ -18,8 +19,6 @@ export default function TodayToDos() {
     }, 5000);
     return () => clearInterval(interval);
   }, [])
-
-  
 
   return (
     <main className="main">

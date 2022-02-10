@@ -19,3 +19,13 @@ export const deleteToDo = async (id) => {
   console.log("deletando")
   return axios.delete(`${BASE_URL}${id}`)
 }
+
+export const updateToDo = async (id, title, date, priority, isCompleted) => {
+  console.log("editando")
+  return axios.put(`${BASE_URL}${id}`, {
+    title: title,
+    date: date,
+    priority: priority,
+    isCompleted: isCompleted
+  })
+}
