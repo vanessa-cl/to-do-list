@@ -5,8 +5,9 @@
 }
 
 body {
-  background-color: gray;
+  background-color: #B28B84;
   font-family: 'Montserrat', sans-serif;
+  color: #dedede;
 }
 
 .navlink {
@@ -18,6 +19,25 @@ body {
   display: flex;
   width: 50%;
   height: 70%;
-  background-color: rgb(185, 174, 159);
+  background-color: #331E38;
+  border-radius: 10px;
+}
+
+.to-do-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.to-do-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.to-do-button {
+  background-color: #95B2B8;
 }
 

@@ -1,28 +1,13 @@
-import React, { useState, useEffect } from "react";
-import NewToDo from "../../Components/NewToDo/NewToDo";
+import React from "react";
 import ToDo from "../../Components/ToDo/ToDo";
-import { getToDo, deleteToDo, updateToDo } from "../../Services/api";
+import { deleteToDo } from "../../Services/api";
+import useToDos from "../../Hooks/useToDos/useToDos";
 
 export default function TodayToDos() {
-  const [allToDos, setAllToDos] = useState({
-    items: {},
-    isLoading: true
-  });
-
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const res = await getToDo();
-      setAllToDos({
-        items: res.data,
-        isLoading: false
-      })
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [])
+  const { allToDos } = useToDos();
 
   return (
     <main className="main">
-      Hoje
       <div className="to-do-area">
       {allToDos.isLoading === true ?
       <p>Carregando...</p> :
