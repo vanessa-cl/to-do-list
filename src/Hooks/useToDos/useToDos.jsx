@@ -14,7 +14,7 @@ export default function useToDos() {
         items: res.data,
         isLoading: false
       })
-    }, 5000);
+    }, 20000);
     return () => clearInterval(interval);
   }, [])
 
