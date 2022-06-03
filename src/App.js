@@ -1,16 +1,11 @@
-import "primereact/resources/themes/rhea/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
 import React from "react";
-import Header from "./Components/Header/Header";
-import Main from "./Components/Main/Main";
-import "./App.css"
+import Main from "./Pages/Main/Main";
+import "./App.scss"
 
 function App() {
 
   return (
     <>
-      <Header />
       <Main />
     </>
   );

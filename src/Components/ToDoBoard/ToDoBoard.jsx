@@ -27,22 +27,23 @@ export default function ToDoBoard({ todos, filter }) {
         console.log("Finished")
         break;
       default:
+        // setFilteredToDos(todos.filter(todo => formatDate(todo.createdAt) === formatActualDate))
         console.log("nada")
     }
   }, [todos, filter])
 
   return (
-    <section className="to-do-area">
+    <section className="to-do-board">
       {filteredToDos.map(todo => {
         return (
           <ToDo
             id={todo.id}
             title={todo.title}
+            description={todo.description}
             createdAt={todo.createdAt}
             dueDate={todo.dueDate}
-            priority={todo.priority}
             isCompleted={todo.isCompleted}
-            onEdit={todo.id}
+            onEdit={todo}
             onDelete={() => deleteToDo(todo.id)}
           />
         )

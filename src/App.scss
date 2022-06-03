@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@400;600&family=Montserrat&family=Poppins:ital,wght@1,300&family=Roboto&display=swap');
+
+:root {
+  --primaryColor: #F0E7D8;
+  --secondaryColor: #BA6E6E;
+  --containerColor: #AB9B96;
+  --firstTextColor: #2F243A;
+  --secondTextColor: #A63A50;
+  --workTag: #5CEBE8;
+  --funTag: #FF7094;
+  --houseTag: #FFDA1F;
+  --studyTag: #7AF73B;
+  --otherTag: #15CB5B;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+@mixin flexbox-sizes($flexDirection, $width, $height) {
+  display: flex;
+  flex-direction: $flexDirection;
+  width: $width;
+  height: $height;
+}
+
+body {
+  background-color: var(--primaryColor);
+  overflow: auto;
+  margin-bottom: 5rem;
+}
+
+.sidebar {
+  @include flexbox-sizes(column, 18%, 100vh);
+  background-color: var(--containerColor);
+  align-items: baseline;
+  justify-content: center;
+  position: fixed;
+}
+
+.header {
+  @include flexbox-sizes(row, 100%, 25%);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.to-do-board {
+  display: grid;
+  width: 100%;
+  height: 75%;
+  grid-gap: 2.5rem;
+  grid-template-columns: repeat(auto-fill, 23rem);
+}
+
+.main-area {
+  @include flexbox-sizes(column, 80%, 100vh);
+  margin-left: 20%;
+  margin-bottom: 5rem;
+}
+
+.add-to-do-icon {
+  font-size: 3.5rem;
+}
+
+.today-title,
+.add-to-do-icon {
+  color: var(--secondTextColor);
+
+}
+
+.to-do-wrapper {
+  @include flexbox-sizes(column, 23rem, 16rem);
+  background-color: var(--secondaryColor);
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.to-do-header,
+.to-do-footer {
+  @include flexbox-sizes(row, 100%, 2rem);
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+}
+
+.to-do-aside {
+  @include flexbox-sizes(row, 8rem, 100%);
+  align-items: center;
+}
+
+.to-do-icon {
+  color: var(--firstTextColor);
+}
+
+.to-do-text,
+.to-do-title {
+  color: var(--firstTextColor);
+}
+
+.to-do-title {
+  font-weight: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.to-do-text {
+  font-size: 1.1rem;
+}
+
+.to-do-date {
+  font-size: 0.8rem;
+}
+
+.nav-link-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  justify-content: space-evenly;
+}
+
+.nav-link {
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border: none;
+}
+
+.nav-link-wrapper:hover {
+  background-color: #d1d1d1;
+}

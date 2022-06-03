@@ -2,12 +2,13 @@ import axios from "axios";
 
 const BASE_URL = "https://6201c621b8735d00174cb5a1.mockapi.io/title/";
 
-export const createToDo = async (title, date, priority, isCompleted) => {
+export const createToDo = async (title, description, dueDate, highPriority, done,) => {
   return axios.post(BASE_URL, {
     title: title,
-    date: date,
-    priority: priority,
-    isCompleted: isCompleted
+    description: description,
+    dueDate: dueDate,
+    highPriority: highPriority,
+    done: done
   }).then(res => console.log(res));
 }
 
