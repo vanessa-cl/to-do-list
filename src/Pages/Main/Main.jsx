@@ -5,21 +5,37 @@ import ToDoBoard from "../../Components/ToDoBoard/ToDoBoard";
 import useToDos from "../../Hooks/useToDos/useToDos";
 
 export default function Main() {
-  const [filter, setFilter] = useState("All");
-  const [todos, setTodos] = useState([]);
+  const [toDoFilter, setToDoFilter] = useState("all");
+  const [tagFilter, setTagFilter] = useState("");
+  const [toDos, setTodos] = useState([]);
   const { allToDos } = useToDos();
 
   useEffect(() => {
-    setTodos(allToDos.items)
+    setTodos(allToDos);
   }, [allToDos])
+
+  const cleanFilters = () => {
+    setToDoFilter("all");
+    setTagFilter("");
+  }
 
   return (
     <>
-      <Sidebar setFilter={(filter) => setFilter(filter)} />
+      <Sidebar
+        toDoFilter={toDoFilter}
+        setToDoFilter={(filter) => setToDoFilter(filter)}
+        tagFilter={tagFilter}
+        setTagFilter={(filter) => setTagFilter(filter)}
+        cleanFilters={() => cleanFilters()}
+      />
       <main className="main-area">
-        {console.log(todos)}
+        {console.log(toDos)}
         <Header></Header>
-        <ToDoBoard todos={todos} filter={filter} />
+        <ToDoBoard
+          toDos={toDos}
+          toDoFilter={toDoFilter}
+          tagFilter={tagFilter}
+        />
       </main>
     </>
   )

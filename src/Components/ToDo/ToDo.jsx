@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import ToDoMenu from "../ToDoMenu/ToDoMenu";
 import { formatDate } from "../../Utils/utils";
 import Checkbox from "@mui/material/Checkbox";
+import CircleIcon from "@mui/icons-material/Circle";
 
-export default function ToDo({ id, title, description, createdAt, dueDate, isCompleted, onEdit, onDelete }) {
+export default function ToDo({ id, title, description, createdAt, dueDate, tags, isCompleted, onEdit, onDelete }) {
   const [isToDoCompleted, setIsToDoCompleted] = useState(isCompleted);
   const teste = (e) => {
     console.log(e)
@@ -23,7 +24,11 @@ export default function ToDo({ id, title, description, createdAt, dueDate, isCom
       <p className="to-do-text">{description}</p>
       <div className="to-do-footer">
         <div className="to-do-tags">
-
+          {tags.map((tag) => {
+            return (
+              <CircleIcon sx={{ fontSize: "3rem" }} className={`${tag}-tag`}></CircleIcon>
+            )
+          })}
         </div>
         <Checkbox
           checked={isToDoCompleted}

@@ -3,38 +3,43 @@ import ToDo from "../ToDo/ToDo";
 import { formatDate } from "../../Utils/utils";
 import { deleteToDo } from "../../Services/api";
 
-export default function ToDoBoard({ todos, filter }) {
+export default function ToDoBoard({ toDos, toDoFilter, tagFilter }) {
   const [filteredToDos, setFilteredToDos] = useState([]);
 
   useEffect(() => {
-    switch (filter) {
+    switch (toDoFilter) {
       case "all":
-        setFilteredToDos(todos);
+        setFilteredToDos(toDos);
         console.log("All");
         break;
       case "today":
         const actualDate = new Date();
         const formatActualDate = formatDate(actualDate.toISOString());
-        setFilteredToDos(todos.filter(todo => formatDate(todo.createdAt) === formatActualDate))
+        setFilteredToDos(toDos.filter((todo) => formatDate(todo.createdAt) === formatActualDate))
         console.log("Today");
         break;
       case "pending":
-        setFilteredToDos(todos.filter(todo => todo.isCompleted === false))
+        setFilteredToDos(toDos.filter((todo) => todo.isCompleted === false))
         console.log("Pending")
         break;
       case "finished":
-        setFilteredToDos(todos.filter(todo => todo.isCompleted === true))
+        setFilteredToDos(toDos.filter((todo) => todo.isCompleted === true))
         console.log("Finished")
         break;
       default:
-        // setFilteredToDos(todos.filter(todo => formatDate(todo.createdAt) === formatActualDate))
+        setFilteredToDos(toDos);
         console.log("nada")
     }
-  }, [todos, filter])
+  }, [toDos, toDoFilter])
+
+  useEffect(() => {
+    setFilteredToDos(toDos.filter((todo) => todo.tags.includes(tagFilter)));
+  }, [toDos, tagFilter])
 
   return (
     <section className="to-do-board">
-      {filteredToDos.map(todo => {
+      {console.log(toDos)}
+      {filteredToDos.map((todo) => {
         return (
           <ToDo
             id={todo.id}
@@ -45,6 +50,7 @@ export default function ToDoBoard({ todos, filter }) {
             isCompleted={todo.isCompleted}
             onEdit={todo}
             onDelete={() => deleteToDo(todo.id)}
+            tags={todo.tags}
           />
         )
       })}

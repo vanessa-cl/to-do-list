@@ -2,16 +2,10 @@ import { useState, useEffect } from "react";
 import { getToDo } from "../../Services/api";
 
 export default function useToDos() {
-  const [allToDos, setAllToDos] = useState({
-    items: {},
-    isLoading: true
-  });
+  const [allToDos, setAllToDos] = useState([]);
 
   useEffect(() => {
-    setAllToDos({
-      items: TO_DO_MOCKS,
-      isLoading: false
-    });
+    setAllToDos(TO_DO_MOCKS);
     // const teste = async () => {
     // const res = await getToDo();
     // setAllToDos({
@@ -36,6 +30,10 @@ const TO_DO_MOCKS = [
     "id": 1,
     "isCompleted": false,
     "title": "title 1 for testing",
+    "tags": [
+      "work",
+      "other"
+    ]
   },
   {
     "createdAt": "2022-05-27T14:54:43.562Z",
@@ -44,6 +42,10 @@ const TO_DO_MOCKS = [
     "id": 2,
     "isCompleted": false,
     "title": "title 2",
+    "tags": [
+      "fun",
+      "house"
+    ]
   },
   {
     "createdAt": "2022-05-27T14:54:43.562Z",
@@ -52,5 +54,8 @@ const TO_DO_MOCKS = [
     "id": 3,
     "isCompleted": true,
     "title": "title 3",
+    "tags": [
+      "study",
+    ]
   }
 ]

@@ -5,6 +5,7 @@
   --primaryColor: #F0E7D8;
   --secondaryColor: #BA6E6E;
   --containerColor: #AB9B96;
+  --selectedColor: #928480;
   --firstTextColor: #2F243A;
   --secondTextColor: #A63A50;
   --workTag: #5CEBE8;
@@ -37,8 +38,8 @@ body {
 .sidebar {
   @include flexbox-sizes(column, 18%, 100vh);
   background-color: var(--containerColor);
-  align-items: baseline;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
   position: fixed;
 }
 
@@ -69,7 +70,6 @@ body {
 .today-title,
 .add-to-do-icon {
   color: var(--secondTextColor);
-
 }
 
 .to-do-wrapper {
@@ -117,20 +117,49 @@ body {
   font-size: 0.8rem;
 }
 
-.nav-link-wrapper {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  justify-content: space-evenly;
-}
-
-.nav-link {
-  padding: 1.5rem;
-  font-size: 1.5rem;
-  background-color: transparent;
+.to-do-filter {
+  @include flexbox-sizes(row, 10rem, 3rem);
+  background-color: var(--secondaryColor);
+  border-radius: 10px;
   border: none;
 }
 
-.nav-link-wrapper:hover {
-  background-color: #d1d1d1;
+.select-filter {
+  color: var(--primaryColor);
+}
+
+.nav-link {
+  @include flexbox-sizes(row, 10rem, 5rem);
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--primaryColor);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: var(--selectedColor);
+}
+
+.work-tag {
+  color: var(--workTag);
+}
+
+.fun-tag {
+  color: var(--funTag);
+}
+
+.house-tag {
+  color: var(--houseTag);
+}
+
+.study-tag {
+  color: var(--studyTag);
+}
+
+.other-tag {
+  color: var(--otherTag);
 }
