@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -11,6 +12,8 @@ import CircleIcon from "@mui/icons-material/Circle";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import Box from "@mui/material/Box";
 
 const INITIAL_FORM_STATE = {
   id: "",
@@ -21,9 +24,25 @@ const INITIAL_FORM_STATE = {
   tags: [],
 }
 
+const ToDoInput = styled(TextField)({
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: "#2F243A",
+      borderWidth: "2px",
+      borderRadius: "10px"
+    }
+
+  }
+})
+
 export default function NewToDo({ open, onHide, onEditToDo }) {
   const [toDoForm, setToDoForm] = useState(INITIAL_FORM_STATE);
   const [openSelect, setOpenSelect] = useState(false);
+  const [letterCounter, setLetterCount] = useState(0);
+
+  useEffect(() => {
+    setLetterCount(toDoForm.description.length)
+  }, [toDoForm.description])
 
   const handleOpenSelect = () => {
     setOpenSelect(true);
@@ -44,7 +63,7 @@ export default function NewToDo({ open, onHide, onEditToDo }) {
   // }));
   // }, [onEditToDo]);
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     return setToDoForm(() => {
       const auxValues = { ...toDoForm };
       auxValues[event.target.name] = event.target.value;
@@ -64,86 +83,105 @@ export default function NewToDo({ open, onHide, onEditToDo }) {
 
   return (
     <Dialog
-      className="edit-modal-wrapper"
       open={open}
       onClose={() => onHide()}
+      maxWidth={"xs"}
+      fullWidth={true}
     >
-      <DialogTitle>New To Do</DialogTitle>
-      <TextField
-        id="title"
-        name="title"
-        value={toDoForm.title}
-        autoComplete="off"
-        onChange={(event) => handleChange(event)}
-        label="Title"
-      />
-      <TextField
-        id="description"
-        name="description"
-        value={toDoForm.description}
-        autoComplete="off"
-        onChange={(event) => handleChange(event)}
-        label="Description"
-      />
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          id="dueDate"
-          name="dueDate"
-          value={toDoForm.dueDate}
-          onChange={(event) => setToDoForm({ ...toDoForm, dueDate: new Date(event).toLocaleDateString() })}
-          label="Done until"
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
-      <Button onClick={() => handleOpenSelect()}>
-        <AddIcon sx={{ fontSize: "3rem" }} />
-        Add tags
-      </Button>
-      <Select
-        style={{ display: "none" }}
-        id="tags-select"
-        value={toDoForm.tags}
-        onChange={(event) => handleTagsChange(event)}
-        open={openSelect}
-        onOpen={() => handleOpenSelect()}
-        onClose={() => handleCloseSelect()}
-        multiple
-      >
-        <MenuItem value={"work"}>
-          <CircleIcon sx={{ fontSize: "3rem" }} className="work-tag"></CircleIcon>
-          <p>Work</p>
-        </MenuItem>
-        <MenuItem value={"fun"}>
-          <CircleIcon sx={{ fontSize: "3rem" }} className="fun-tag"></CircleIcon>
-          <p>Fun</p>
-        </MenuItem>
-        <MenuItem value={"house"}>
-          <CircleIcon sx={{ fontSize: "3rem" }} className="house-tag"></CircleIcon>
-          <p>House</p>
-        </MenuItem>
-        <MenuItem value={"study"}>
-          <CircleIcon sx={{ fontSize: "3rem" }} className="study-tag"></CircleIcon>
-          <p>Study</p>
-        </MenuItem>
-        <MenuItem value={"other"}>
-          <CircleIcon sx={{ fontSize: "3rem" }} className="other-tag"></CircleIcon>
-          <p>Other</p>
-        </MenuItem>
-      </Select>
-      <div>
-        <div className="selected-to-do-tags">
-          {toDoForm.tags.map((tag, index) => {
-            return (
-              <CircleIcon key={index} sx={{ fontSize: "3rem" }} className={`${tag}-tag`}></CircleIcon>
-            )
-          })}
-        </div>
-      </div>
-      <Button
-        onClick={() => onSubmit()}
-      >
-        Add
-      </Button>
+      <Box className="to-do-dialog-wrapper">
+        <DialogTitle className="to-do-dialog-header">
+          <p className="to-do-dialog-title">New To Do</p>
+          <Button onClick={() => onHide()}>
+            <CloseIcon sx={{ fontSize: "3rem" }} className="to-do-dialog-close" />
+          </Button>
+        </DialogTitle>
+        <form className="to-do-form">
+          <section className="to-do-form-row">
+            <ToDoInput
+              id="title"
+              name="title"
+              className="to-do-form-input"
+              value={toDoForm.title}
+              autoComplete="off"
+              onChange={(event) => handleFormChange(event)}
+              label="Title"
+            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <ToDoInput
+                id="dueDate"
+                name="dueDate"
+                className="to-do-form-input"
+                value={toDoForm.dueDate}
+                onChange={(event) => setToDoForm({ ...toDoForm, dueDate: new Date(event).toLocaleDateString() })}
+                label="Done until"
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </section>
+          <ToDoInput
+            id="description"
+            name="description"
+            className="to-do-form-input"
+            value={toDoForm.description}
+            autoComplete="off"
+            onChange={(event) => handleFormChange(event)}
+            label="Description"
+          />
+          <section className="to-do-form-row">
+            <Button onClick={() => handleOpenSelect()}>
+              <AddIcon sx={{ fontSize: "3rem" }} />
+              Add tags
+            </Button>
+            <Select
+              style={{ display: "none" }}
+              id="tags-select"
+              value={toDoForm.tags}
+              onChange={(event) => handleTagsChange(event)}
+              open={openSelect}
+              onOpen={() => handleOpenSelect()}
+              onClose={() => handleCloseSelect()}
+              multiple
+            >
+              <MenuItem value={"work"}>
+                <CircleIcon sx={{ fontSize: "3rem" }} className="work-tag"></CircleIcon>
+                <p>Work</p>
+              </MenuItem>
+              <MenuItem value={"fun"}>
+                <CircleIcon sx={{ fontSize: "3rem" }} className="fun-tag"></CircleIcon>
+                <p>Fun</p>
+              </MenuItem>
+              <MenuItem value={"house"}>
+                <CircleIcon sx={{ fontSize: "3rem" }} className="house-tag"></CircleIcon>
+                <p>House</p>
+              </MenuItem>
+              <MenuItem value={"study"}>
+                <CircleIcon sx={{ fontSize: "3rem" }} className="study-tag"></CircleIcon>
+                <p>Study</p>
+              </MenuItem>
+              <MenuItem value={"other"}>
+                <CircleIcon sx={{ fontSize: "3rem" }} className="other-tag"></CircleIcon>
+                <p>Other</p>
+              </MenuItem>
+            </Select>
+            <p>{letterCounter}/200</p>
+          </section>
+          <section className="to-do-form-row">
+            <div className="to-do-form-tags">
+              {toDoForm.tags.map((tag, index) => {
+                return (
+                  <CircleIcon key={index} sx={{ fontSize: "3rem" }} className={`${tag}-tag`}></CircleIcon>
+                )
+              })}
+            </div>
+            <Button
+              onClick={() => onSubmit()}
+            >
+              Add
+            </Button>
+          </section>
+        </form>
+      </Box>
+
     </Dialog>
   )
 };
