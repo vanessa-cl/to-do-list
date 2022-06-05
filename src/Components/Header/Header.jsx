@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import NewToDo from "../NewToDo/NewToDo";
 import Button from "@mui/material/Button";
-import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Header() {
-  const [openAddToDo, setOpenAddToDo] = useState(false);
+  const [open, setOpen] = useState(false);
   const [dateString, setDateString] = useState("");
 
   useEffect(() => {
@@ -15,14 +15,15 @@ export default function Header() {
     <header className="header">
       <h1 className="today-title">Today, {dateString}</h1>
       <Button
-        onClick={() => setOpenAddToDo(true)}
+        onClick={() => setOpen(true)}
       >
-        <AddBoxRoundedIcon sx={{fontSize: "3.5rem"}} className="add-to-do-icon" />
+        <AddIcon sx={{ fontSize: "3.5rem" }} className="add-to-do-icon" />
       </Button>
       <NewToDo
-        visible={openAddToDo}
-        onHide={() => setOpenAddToDo()}
-        onEditToDo={{}} />
+        open={open}
+        onHide={() => setOpen(false)}
+        onEditToDo={{}}
+      />
     </header>
   )
 };

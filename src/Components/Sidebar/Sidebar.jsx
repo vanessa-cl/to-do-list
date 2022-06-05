@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -55,7 +55,7 @@ export default function Sidebar({ toDoFilter, setToDoFilter, tagFilter, setTagFi
           />
         </div>
         <div className="nav-link-wrapper">
-        <label htmlFor="house-tag" className={`nav-link ${tagFilter === "house" ? "selected" : ""}`}>
+          <label htmlFor="house-tag" className={`nav-link ${tagFilter === "house" ? "selected" : ""}`}>
             <CircleIcon sx={{ fontSize: "3rem" }} className="house-tag"></CircleIcon>
             <p>House</p>
           </label>
@@ -68,7 +68,7 @@ export default function Sidebar({ toDoFilter, setToDoFilter, tagFilter, setTagFi
           />
         </div>
         <div className="nav-link-wrapper">
-        <label htmlFor="study-tag" className={`nav-link ${tagFilter === "study" ? "selected" : ""}`}>
+          <label htmlFor="study-tag" className={`nav-link ${tagFilter === "study" ? "selected" : ""}`}>
             <CircleIcon sx={{ fontSize: "3rem" }} className="study-tag"></CircleIcon>
             <p>Study</p>
           </label>
@@ -81,7 +81,7 @@ export default function Sidebar({ toDoFilter, setToDoFilter, tagFilter, setTagFi
           />
         </div>
         <div className="nav-link-wrapper">
-        <label htmlFor="other-tag" className={`nav-link ${tagFilter === "other" ? "selected" : ""}`}>
+          <label htmlFor="other-tag" className={`nav-link ${tagFilter === "other" ? "selected" : ""}`}>
             <CircleIcon sx={{ fontSize: "3rem" }} className="other-tag"></CircleIcon>
             <p>Other</p>
           </label>

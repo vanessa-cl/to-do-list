@@ -1,60 +1,80 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
 import { createToDo, updateToDo } from "../../Services/api";
-import Checkbox from "@mui/material/Checkbox";
+import CircleIcon from "@mui/icons-material/Circle";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import AddIcon from "@mui/icons-material/Add";
 
 const INITIAL_FORM_STATE = {
   id: "",
   title: "",
   description: "",
-  dueDate: "",
-  highPriority: false,
-  done: false
+  dueDate: new Date().toLocaleDateString(),
+  done: false,
+  tags: [],
 }
 
-export default function NewToDo({ visible, onHide, onEditToDo }) {
+export default function NewToDo({ open, onHide, onEditToDo }) {
   const [toDoForm, setToDoForm] = useState(INITIAL_FORM_STATE);
+  const [openSelect, setOpenSelect] = useState(false);
 
-  useEffect(() => {
-    setToDoForm(() => ({
-      id: onEditToDo.id,
-      title: onEditToDo.title,
-      description: onEditToDo.description,
-      dueDate: onEditToDo.dueDate,
-      highPriority: onEditToDo.priority,
-      done: onEditToDo.done,
-    }));
-  }, [onEditToDo]);
+  const handleOpenSelect = () => {
+    setOpenSelect(true);
+  }
 
-  const handleChange = (e) => {
+  const handleCloseSelect = () => {
+    setOpenSelect(false);
+  }
+
+  // useEffect(() => {
+  // setToDoForm(() => ({
+  // id: onEditToDo.id,
+  // title: onEditToDo.title,
+  // description: onEditToDo.description,
+  // dueDate: onEditToDo.dueDate,
+  // done: onEditToDo.done,
+  // tags: onEditToDo.tags,
+  // }));
+  // }, [onEditToDo]);
+
+  const handleChange = (event) => {
     return setToDoForm(() => {
       const auxValues = { ...toDoForm };
-      auxValues[e.target.name] = e.target.value;
+      auxValues[event.target.name] = event.target.value;
       return auxValues;
     });
   };
 
+  const handleTagsChange = (event) => {
+    setToDoForm({ ...toDoForm, tags: event.target.value })
+  }
+
   const onSubmit = async () => {
     !onEditToDo.id ?
-      createToDo(toDoForm.title, toDoForm.description, toDoForm.dueDate, toDoForm.highPriority, toDoForm.done)
-      : updateToDo(toDoForm.id, toDoForm.title, toDoForm.description, toDoForm.dueDate, toDoForm.highPriority, toDoForm.done)
+      createToDo(toDoForm)
+      : updateToDo(toDoForm)
   }
 
   return (
     <Dialog
       className="edit-modal-wrapper"
-      open={visible}
+      open={open}
       onClose={() => onHide()}
     >
+      <DialogTitle>New To Do</DialogTitle>
       <TextField
         id="title"
         name="title"
         value={toDoForm.title}
         autoComplete="off"
-        onChange={handleChange}
+        onChange={(event) => handleChange(event)}
         label="Title"
       />
       <TextField
@@ -62,26 +82,68 @@ export default function NewToDo({ visible, onHide, onEditToDo }) {
         name="description"
         value={toDoForm.description}
         autoComplete="off"
-        onChange={handleChange}
+        onChange={(event) => handleChange(event)}
         label="Description"
       />
-      <Checkbox
-        checked={toDoForm.highPriority}
-        onChange={() => handleChange}
-        label="High Priority"
-      />
-      <DesktopDatePicker
-        id="date"
-        inputFormat="dd/mm/yy"
-        name="date"
-        value={toDoForm.dueDate}
-        onChange={handleChange}
-        label="Done until:"
-        renderInput={(params) => <TextField {...params} />}
-      />
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DatePicker
+          id="dueDate"
+          name="dueDate"
+          value={toDoForm.dueDate}
+          onChange={(event) => setToDoForm({ ...toDoForm, dueDate: new Date(event).toLocaleDateString() })}
+          label="Done until"
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </LocalizationProvider>
+      <Button onClick={() => handleOpenSelect()}>
+        <AddIcon sx={{ fontSize: "3rem" }} />
+        Add tags
+      </Button>
+      <Select
+        style={{ display: "none" }}
+        id="tags-select"
+        value={toDoForm.tags}
+        onChange={(event) => handleTagsChange(event)}
+        open={openSelect}
+        onOpen={() => handleOpenSelect()}
+        onClose={() => handleCloseSelect()}
+        multiple
+      >
+        <MenuItem value={"work"}>
+          <CircleIcon sx={{ fontSize: "3rem" }} className="work-tag"></CircleIcon>
+          <p>Work</p>
+        </MenuItem>
+        <MenuItem value={"fun"}>
+          <CircleIcon sx={{ fontSize: "3rem" }} className="fun-tag"></CircleIcon>
+          <p>Fun</p>
+        </MenuItem>
+        <MenuItem value={"house"}>
+          <CircleIcon sx={{ fontSize: "3rem" }} className="house-tag"></CircleIcon>
+          <p>House</p>
+        </MenuItem>
+        <MenuItem value={"study"}>
+          <CircleIcon sx={{ fontSize: "3rem" }} className="study-tag"></CircleIcon>
+          <p>Study</p>
+        </MenuItem>
+        <MenuItem value={"other"}>
+          <CircleIcon sx={{ fontSize: "3rem" }} className="other-tag"></CircleIcon>
+          <p>Other</p>
+        </MenuItem>
+      </Select>
+      <div>
+        <div className="selected-to-do-tags">
+          {toDoForm.tags.map((tag, index) => {
+            return (
+              <CircleIcon key={index} sx={{ fontSize: "3rem" }} className={`${tag}-tag`}></CircleIcon>
+            )
+          })}
+        </div>
+      </div>
       <Button
         onClick={() => onSubmit()}
-      >Add</Button>
+      >
+        Add
+      </Button>
     </Dialog>
   )
 };

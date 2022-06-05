@@ -131,13 +131,17 @@ body {
 .nav-link {
   @include flexbox-sizes(row, 10rem, 5rem);
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 1.5rem;
   font-size: 1.5rem;
   color: var(--primaryColor);
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.selected-option {
+  display: none;
 }
 
 .selected {
