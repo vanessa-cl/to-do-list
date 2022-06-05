@@ -31,11 +31,10 @@ const ToDoInput = styled(TextField)({
       borderWidth: "2px",
       borderRadius: "10px"
     }
-
   }
 })
 
-export default function NewToDo({ open, onHide, onEditToDo }) {
+export default function AddToDo({ open, onHide, onEditToDo }) {
   const [toDoForm, setToDoForm] = useState(INITIAL_FORM_STATE);
   const [openSelect, setOpenSelect] = useState(false);
   const [letterCounter, setLetterCount] = useState(0);
@@ -52,16 +51,18 @@ export default function NewToDo({ open, onHide, onEditToDo }) {
     setOpenSelect(false);
   }
 
-  // useEffect(() => {
-  // setToDoForm(() => ({
-  // id: onEditToDo.id,
-  // title: onEditToDo.title,
-  // description: onEditToDo.description,
-  // dueDate: onEditToDo.dueDate,
-  // done: onEditToDo.done,
-  // tags: onEditToDo.tags,
-  // }));
-  // }, [onEditToDo]);
+  useEffect(() => {
+    if (Object.keys(onEditToDo).length !== 0) {
+      setToDoForm(() => ({
+        id: onEditToDo.id,
+        title: onEditToDo.title,
+        description: onEditToDo.description,
+        dueDate: onEditToDo.dueDate,
+        done: onEditToDo.done,
+        tags: onEditToDo.tags,
+      }))
+    }
+  }, [onEditToDo]);
 
   const handleFormChange = (event) => {
     return setToDoForm(() => {
@@ -88,9 +89,12 @@ export default function NewToDo({ open, onHide, onEditToDo }) {
       maxWidth={"xs"}
       fullWidth={true}
     >
+      {console.log(onEditToDo)}
       <Box className="to-do-dialog-wrapper">
         <DialogTitle className="to-do-dialog-header">
-          <p className="to-do-dialog-title">New To Do</p>
+          <p className="to-do-dialog-title">
+            {Object.keys(onEditToDo).length === 0 ? "Add To Do" : "Edit To Do"}
+          </p>
           <Button onClick={() => onHide()}>
             <CloseIcon sx={{ fontSize: "3rem" }} className="to-do-dialog-close" />
           </Button>
@@ -123,6 +127,8 @@ export default function NewToDo({ open, onHide, onEditToDo }) {
             name="description"
             className="to-do-form-input"
             value={toDoForm.description}
+            multiline
+            rows={5}
             autoComplete="off"
             onChange={(event) => handleFormChange(event)}
             label="Description"

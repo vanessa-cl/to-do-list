@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NewToDo from "../NewToDo/NewToDo";
+import AddToDo from "../AddToDo/AddToDo";
 import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
 
@@ -19,7 +19,7 @@ export default function Header() {
       >
         <AddIcon sx={{ fontSize: "3.5rem" }} className="add-to-do-icon" />
       </Button>
-      <NewToDo
+      <AddToDo
         open={open}
         onHide={() => setOpen(false)}
         onEditToDo={{}}

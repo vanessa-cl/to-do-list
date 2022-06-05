@@ -1,52 +1,48 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+import { deleteToDo } from "../../Services/api";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import NewToDo from "../NewToDo/NewToDo";
 import DehazeIcon from "@mui/icons-material/Dehaze";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddToDo from "../AddToDo/AddToDo";
 
-export default function ToDoMenu({ onEdit, onDelete }) {
-  const [openMenu, setOpenMenu] = useState(true);
+export default function ToDoMenu({ openMenu, handleCloseMenu, handleOpenMenu, toDoData }) {
   const [openAddToDo, setOpenAddToDo] = useState(false);
-  const [isOnEditMode, setIsOnEditMode] = useState({});
-
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <>
       <Menu
-        open={open}
-        onClose={() => handleClose()}
+        open={openMenu}
+        onClose={() => handleCloseMenu()}
       >
         <MenuItem onClick={() => {
           setOpenAddToDo(true);
-          setIsOnEditMode(onEdit);
-          handleClose();
-        }}>Edit</MenuItem>
+          handleCloseMenu();
+        }}>
+          <EditIcon sx={{ fontSize: "2rem" }} />
+          Edit
+        </MenuItem>
         <MenuItem onClick={() => {
-          onDelete();
-          handleClose();
-        }}>Delete</MenuItem>
-        <MenuItem onClick={() => {
-          setOpenAddToDo(true);
-          handleClose();
-        }}>New To Do</MenuItem>
+          deleteToDo(toDoData.id);
+          handleCloseMenu();
+        }}>
+          <DeleteIcon sx={{ fontSize: "2rem" }} />
+          Delete
+        </MenuItem>
       </Menu>
-      <Button
-        onClick={() => handleClick()}
-      ><DehazeIcon className="to-do-icon" /></Button>
-      <NewToDo
-        visible={openAddToDo}
-        onHide={() => setOpenAddToDo()}
-        onEditToDo={isOnEditMode}
-      />
+      <Button onClick={() => handleOpenMenu()}>
+        <DehazeIcon className="to-do-icon" />
+      </Button>
+      {openAddToDo ?
+        <AddToDo
+          open={openAddToDo}
+          onHide={() => setOpenAddToDo(false)}
+          onEditToDo={toDoData}
+        />
+        : <></>
+      }
     </>
   )
 };

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ToDo from "../ToDo/ToDo";
 import { formatDate } from "../../Utils/utils";
-import { deleteToDo } from "../../Services/api";
 
 export default function ToDoBoard({ toDos, toDoFilter, tagFilter }) {
   const [filteredToDos, setFilteredToDos] = useState([]);
@@ -42,15 +41,7 @@ export default function ToDoBoard({ toDos, toDoFilter, tagFilter }) {
       {filteredToDos.map((todo) => {
         return (
           <ToDo
-            id={todo.id}
-            title={todo.title}
-            description={todo.description}
-            createdAt={todo.createdAt}
-            dueDate={todo.dueDate}
-            isCompleted={todo.isCompleted}
-            onEdit={todo}
-            onDelete={() => deleteToDo(todo.id)}
-            tags={todo.tags}
+            toDoData={todo}
           />
         )
       })}

@@ -4,8 +4,18 @@ import { formatDate } from "../../Utils/utils";
 import Checkbox from "@mui/material/Checkbox";
 import CircleIcon from "@mui/icons-material/Circle";
 
-export default function ToDo({ id, title, description, createdAt, dueDate, tags, isCompleted, onEdit, onDelete }) {
-  const [isToDoCompleted, setIsToDoCompleted] = useState(isCompleted);
+export default function ToDo({ toDoData }) {
+  const { id, title, description, createdAt, dueDate, tags, done } = toDoData
+  const [isToDoCompleted, setIsToDoCompleted] = useState(done);
+  const [openMenu, setOpenMenu] = useState(false);
+  const handleOpenMenu = () => {
+    setOpenMenu(true);
+  }
+
+  const handleCloseMenu = () => {
+    setOpenMenu(false);
+  }
+
   const teste = (e) => {
     console.log(e)
   }
@@ -16,8 +26,10 @@ export default function ToDo({ id, title, description, createdAt, dueDate, tags,
         <div className="to-do-aside">
           <p className="to-do-date">{formatDate(dueDate)}</p>
           <ToDoMenu
-            onEdit={onEdit}
-            onDelete={onDelete}
+            openMenu={openMenu}
+            handleCloseMenu={() => handleCloseMenu()}
+            handleOpenMenu={() => handleOpenMenu()}
+            toDoData={toDoData}
           />
         </div>
       </div>
