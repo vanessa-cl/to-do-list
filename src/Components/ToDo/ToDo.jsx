@@ -3,11 +3,13 @@ import ToDoMenu from "../ToDoMenu/ToDoMenu";
 import { formatDate } from "../../Utils/utils";
 import Checkbox from "@mui/material/Checkbox";
 import CircleIcon from "@mui/icons-material/Circle";
+import { updateToDo } from "../../Services/api";
 
 export default function ToDo({ toDoData }) {
-  const { id, title, description, createdAt, dueDate, tags, done } = toDoData
-  const [isToDoCompleted, setIsToDoCompleted] = useState(done);
+  const { id, title, description, dueDate, done, tags } = toDoData
+  const [checked, setChecked] = useState(done);
   const [openMenu, setOpenMenu] = useState(false);
+  
   const handleOpenMenu = () => {
     setOpenMenu(true);
   }
@@ -16,9 +18,11 @@ export default function ToDo({ toDoData }) {
     setOpenMenu(false);
   }
 
-  const teste = (e) => {
-    console.log(e)
+  const handleStatusChange = async (event) => {
+    setChecked(event.target.checked);
+    await updateToDo(id, title, description, dueDate, event.target.checked, tags);
   }
+
   return (
     <section className="to-do-wrapper" key={id}>
       <div className="to-do-header">
@@ -42,10 +46,10 @@ export default function ToDo({ toDoData }) {
             )
           })}
         </div>
+        {console.log(checked)}
         <Checkbox
-          checked={isToDoCompleted}
-          onChange={(event) => teste(event)}
-          label="Done"
+          checked={checked}
+          onChange={(event) => handleStatusChange(event)}
         />
       </div>
     </section>

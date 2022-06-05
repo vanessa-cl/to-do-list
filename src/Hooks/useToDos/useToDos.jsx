@@ -5,15 +5,12 @@ export default function useToDos() {
   const [allToDos, setAllToDos] = useState([]);
 
   useEffect(() => {
-    setAllToDos(TO_DO_MOCKS);
-    // const teste = async () => {
-    // const res = await getToDo();
-    // setAllToDos({
-    // items: res.data,
-    // isLoading: false
-    // })
-    // };
-    // return () => teste();
+    // setAllToDos(TO_DO_MOCKS);
+    const getToDos = async () => {
+      const res = await getToDo();
+      setAllToDos(res.data)
+    };
+    return getToDos();
   }, [])
 
   return {
@@ -28,7 +25,7 @@ const TO_DO_MOCKS = [
     "description": "Omnis et ea recusandae eos voluptates temporibus velit. Omnis nihil mollitia perspiciatis ut voluptates. Nisi quos consequatur quae nobis quasi autem nihil rerum. Eos et enim ex pariatur numquam tempora.",
     "dueDate": "2022-05-28T02:44:02.243Z",
     "id": 1,
-    "isCompleted": false,
+    "done": false,
     "title": "title 1 for testing",
     "tags": [
       "work",
@@ -40,7 +37,7 @@ const TO_DO_MOCKS = [
     "description": "Omnis et ea recusandae eos voluptates temporibus velit. Omnis nihil mollitia perspiciatis ut voluptates. Nisi quos consequatur quae nobis quasi autem nihil rerum. Eos et enim ex pariatur numquam tempora.",
     "dueDate": "2022-05-28T02:44:02.243Z",
     "id": 2,
-    "isCompleted": false,
+    "done": false,
     "title": "title 2",
     "tags": [
       "fun",
@@ -52,7 +49,7 @@ const TO_DO_MOCKS = [
     "description": "Omnis et ea recusandae eos voluptates temporibus velit. Omnis nihil mollitia perspiciatis ut voluptates. Nisi quos consequatur quae nobis quasi autem nihil rerum. Eos et enim ex pariatur numquam tempora.",
     "dueDate": "2022-05-28T02:44:02.243Z",
     "id": 3,
-    "isCompleted": true,
+    "done": true,
     "title": "title 3",
     "tags": [
       "study",

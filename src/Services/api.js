@@ -2,13 +2,13 @@ import axios from "axios";
 
 const BASE_URL = "https://6201c621b8735d00174cb5a1.mockapi.io/title/";
 
-export const createToDo = async (title, description, dueDate, highPriority, done,) => {
+export const createToDo = async (toDoData) => {
   return axios.post(BASE_URL, {
-    title: title,
-    description: description,
-    dueDate: dueDate,
-    highPriority: highPriority,
-    done: done
+    title: toDoData.title,
+    description: toDoData.description,
+    dueDate: toDoData.dueDate,
+    done: toDoData.done,
+    tags: toDoData.tags,
   }).then(res => console.log(res));
 }
 
@@ -21,12 +21,13 @@ export const deleteToDo = async (id) => {
   return axios.delete(`${BASE_URL}${id}`)
 }
 
-export const updateToDo = async (id, title, date, priority, isCompleted) => {
+export const updateToDo = async (id, title, description, dueDate, done, tags) => {
   console.log("editando")
   return axios.put(`${BASE_URL}${id}`, {
     title: title,
-    date: date,
-    priority: priority,
-    isCompleted: isCompleted
-  })
+    description: description,
+    dueDate: dueDate,
+    done: done,
+    tags: tags,
+  }).then((res) => console.log(res))
 }
