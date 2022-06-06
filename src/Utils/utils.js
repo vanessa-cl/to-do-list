@@ -1,5 +1,6 @@
-import { format, parseISO } from "date-fns";
+export const formatDate = (time) => {
+  const date = time.slice(0, 10);
+  return new Date(date).toLocaleDateString();
+};
 
-export function formatDate(date) {
-  return format(parseISO(date), "dd/MM/yyyy");
-}
+export const TAGS_OPTIONS = ["work", "fun", "house", "study", "other"];

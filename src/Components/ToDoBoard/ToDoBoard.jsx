@@ -4,6 +4,7 @@ import { formatDate } from "../../Utils/utils";
 
 export default function ToDoBoard({ toDos, toDoFilter, tagFilter }) {
   const [filteredToDos, setFilteredToDos] = useState([]);
+  const [toDosByTag, setToDosByTag] = useState([]);
 
   useEffect(() => {
     switch (toDoFilter) {
@@ -14,15 +15,15 @@ export default function ToDoBoard({ toDos, toDoFilter, tagFilter }) {
       case "today":
         const actualDate = new Date();
         const formatActualDate = formatDate(actualDate.toISOString());
-        setFilteredToDos(toDos.filter((todo) => formatDate(todo.createdAt) === formatActualDate))
+        setFilteredToDos(filterToDosByTag(toDos.filter((todo) => formatDate(todo.createdAt) === formatActualDate)));
         console.log("Today");
         break;
       case "pending":
-        setFilteredToDos(toDos.filter((todo) => todo.isCompleted === false))
+        setFilteredToDos(toDos.filter((todo) => todo.done === false))
         console.log("Pending")
         break;
       case "finished":
-        setFilteredToDos(toDos.filter((todo) => todo.isCompleted === true))
+        setFilteredToDos(toDos.filter((todo) => todo.done === true))
         console.log("Finished")
         break;
       default:
@@ -31,9 +32,13 @@ export default function ToDoBoard({ toDos, toDoFilter, tagFilter }) {
     }
   }, [toDos, toDoFilter])
 
-  useEffect(() => {
-    setFilteredToDos(toDos.filter((todo) => todo.tags.includes(tagFilter)));
-  }, [toDos, tagFilter])
+  const filterToDosByTag = (toDos) => {
+    return toDos.filter((todo) => todo.tags.includes(tagFilter));
+  }
+
+  // useEffect(() => {
+  // setFilteredToDos();
+  // }, [toDos, tagFilter])
 
   return (
     <section className="to-do-board">

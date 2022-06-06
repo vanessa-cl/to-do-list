@@ -21,7 +21,7 @@ export default function Header() {
       </Button>
       <AddToDo
         open={open}
-        onHide={() => setOpen(false)}
+        handleDialogClose={() => setOpen(false)}
         onEditToDo={{}}
       />
     </header>
