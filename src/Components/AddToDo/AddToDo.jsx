@@ -34,7 +34,7 @@ const ToDoInput = styled(TextField)({
   }
 })
 
-export default function AddToDo({ open, onHide, onEditToDo }) {
+export default function AddToDo({ open, handleDialogClose, onEditToDo }) {
   const [toDoForm, setToDoForm] = useState(INITIAL_FORM_STATE);
   const [openSelect, setOpenSelect] = useState(false);
   const [letterCounter, setLetterCount] = useState(0);
@@ -85,7 +85,7 @@ export default function AddToDo({ open, onHide, onEditToDo }) {
   return (
     <Dialog
       open={open}
-      onClose={() => onHide()}
+      onClose={() => handleDialogClose()}
       maxWidth={"xs"}
       fullWidth={true}
     >
@@ -95,7 +95,7 @@ export default function AddToDo({ open, onHide, onEditToDo }) {
           <p className="to-do-dialog-title">
             {Object.keys(onEditToDo).length === 0 ? "Add To Do" : "Edit To Do"}
           </p>
-          <Button onClick={() => onHide()}>
+          <Button onClick={() => handleDialogClose()}>
             <CloseIcon sx={{ fontSize: "3rem" }} className="to-do-dialog-close" />
           </Button>
         </DialogTitle>

@@ -7,9 +7,11 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddToDo from "../AddToDo/AddToDo";
+import { AlertDialog } from "../AlertDialog/AlertDialog";
 
 export default function ToDoMenu({ openMenu, handleCloseMenu, handleOpenMenu, toDoData }) {
-  const [openAddToDo, setOpenAddToDo] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
   return (
     <>
@@ -18,14 +20,14 @@ export default function ToDoMenu({ openMenu, handleCloseMenu, handleOpenMenu, to
         onClose={() => handleCloseMenu()}
       >
         <MenuItem onClick={() => {
-          setOpenAddToDo(true);
+          setOpenDialog(true);
           handleCloseMenu();
         }}>
           <EditIcon sx={{ fontSize: "2rem" }} />
           Edit
         </MenuItem>
         <MenuItem onClick={() => {
-          deleteToDo(toDoData.id);
+          setOpenAlert(true);
           handleCloseMenu();
         }}>
           <DeleteIcon sx={{ fontSize: "2rem" }} />
@@ -35,14 +37,16 @@ export default function ToDoMenu({ openMenu, handleCloseMenu, handleOpenMenu, to
       <Button onClick={() => handleOpenMenu()}>
         <DehazeIcon className="to-do-icon" />
       </Button>
-      {openAddToDo ?
-        <AddToDo
-          open={openAddToDo}
-          onHide={() => setOpenAddToDo(false)}
-          onEditToDo={toDoData}
-        />
-        : <></>
-      }
+      <AddToDo
+        open={openDialog}
+        handleDialogClose={() => setOpenDialog(false)}
+        onEditToDo={toDoData}
+      />
+      <AlertDialog
+        open={openAlert}
+        handleAlertClose={() => setOpenAlert(false)}
+        confirmDelete={() => deleteToDo(toDoData.id)}
+      />
     </>
   )
 };
