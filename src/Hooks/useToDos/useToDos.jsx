@@ -5,12 +5,12 @@ export default function useToDos() {
   const [allToDos, setAllToDos] = useState([]);
 
   useEffect(() => {
-    // setAllToDos(TO_DO_MOCKS);
-    const getToDos = async () => {
-      const res = await getToDo();
-      setAllToDos(res.data)
-    };
-    return getToDos();
+    setAllToDos(TO_DO_MOCKS);
+    // const getToDos = async () => {
+      // const res = await getToDo();
+      // setAllToDos(res.data)
+    // };
+    // return getToDos();
   }, [])
 
   return {
@@ -23,10 +23,10 @@ const TO_DO_MOCKS = [
   {
     "createdAt": "2022-05-27T14:54:43.562Z",
     "description": "Omnis et ea recusandae eos voluptates temporibus velit. Omnis nihil mollitia perspiciatis ut voluptates. Nisi quos consequatur quae nobis quasi autem nihil rerum. Eos et enim ex pariatur numquam tempora.",
-    "dueDate": "2022-05-28T02:44:02.243Z",
+    "dueDate": "28/06/2022",
     "id": 1,
     "done": false,
-    "title": "title 1 for testing",
+    "title": "mock title 1 for testing",
     "tags": [
       "work",
       "other"
@@ -35,10 +35,10 @@ const TO_DO_MOCKS = [
   {
     "createdAt": "2022-05-27T14:54:43.562Z",
     "description": "Omnis et ea recusandae eos voluptates temporibus velit. Omnis nihil mollitia perspiciatis ut voluptates. Nisi quos consequatur quae nobis quasi autem nihil rerum. Eos et enim ex pariatur numquam tempora.",
-    "dueDate": "2022-05-28T02:44:02.243Z",
+    "dueDate": "06/06/2022",
     "id": 2,
     "done": false,
-    "title": "title 2",
+    "title": "mock title 2",
     "tags": [
       "fun",
       "house"
@@ -47,10 +47,10 @@ const TO_DO_MOCKS = [
   {
     "createdAt": "2022-05-27T14:54:43.562Z",
     "description": "Omnis et ea recusandae eos voluptates temporibus velit. Omnis nihil mollitia perspiciatis ut voluptates. Nisi quos consequatur quae nobis quasi autem nihil rerum. Eos et enim ex pariatur numquam tempora.",
-    "dueDate": "2022-05-28T02:44:02.243Z",
+    "dueDate": "11/12/22",
     "id": 3,
     "done": true,
-    "title": "title 3",
+    "title": "mock title 3",
     "tags": [
       "study",
     ]

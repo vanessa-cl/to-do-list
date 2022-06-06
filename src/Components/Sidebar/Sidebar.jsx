@@ -5,8 +5,10 @@ import MenuItem from "@mui/material/MenuItem";
 import CircleIcon from "@mui/icons-material/Circle";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Radio from "@mui/material/Radio";
+import { FILTER_OPTIONS } from "../../Utils/utils";
 
 export default function Sidebar({ toDoFilter, setToDoFilter, tagFilter, setTagFilter, cleanFilters }) {
+  
   const handleToDoFilterChange = (event) => {
     setToDoFilter(event.target.value);
   }
@@ -22,10 +24,11 @@ export default function Sidebar({ toDoFilter, setToDoFilter, tagFilter, setTagFi
         value={toDoFilter}
         onChange={(event) => handleToDoFilterChange(event)}
       >
-        <MenuItem className="select-filter" value={"all"}>All</MenuItem>
-        <MenuItem value={"today"}>Today</MenuItem>
-        <MenuItem value={"pending"}>Pending</MenuItem>
-        <MenuItem value={"finished"}>Finished</MenuItem>
+        {FILTER_OPTIONS.map((filter, index) => {
+          return (
+            <MenuItem key={index} value={filter}>{filter}</MenuItem>
+          )
+        })}
       </Select>
       <nav className="tagbar">
         <div className="nav-link-wrapper">
@@ -94,6 +97,7 @@ export default function Sidebar({ toDoFilter, setToDoFilter, tagFilter, setTagFi
           />
         </div>
         <Button
+          className={`${!tagFilter ? "selected" : ""}`}
           startIcon={<FilterAltIcon />}
           onClick={() => cleanFilters()}>
           Clean Filters

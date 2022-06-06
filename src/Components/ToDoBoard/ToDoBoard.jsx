@@ -1,49 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ToDo from "../ToDo/ToDo";
-import { formatDate } from "../../Utils/utils";
 
-export default function ToDoBoard({ toDos, toDoFilter, tagFilter }) {
+export default function ToDoBoard({ toDos, toDoFilter, tagFilter, cleanFilters }) {
   const [filteredToDos, setFilteredToDos] = useState([]);
-  const [toDosByTag, setToDosByTag] = useState([]);
+  const actualDate = new Date().toLocaleDateString();
+
+  const filterToDosByTag = useCallback((toDos) => {
+    return tagFilter ?
+      toDos.filter((todo) => todo.tags.includes(tagFilter)) :
+      toDos;
+  }, [tagFilter])
 
   useEffect(() => {
     switch (toDoFilter) {
-      case "all":
-        setFilteredToDos(toDos);
-        console.log("All");
-        break;
       case "today":
-        const actualDate = new Date();
-        const formatActualDate = formatDate(actualDate.toISOString());
-        setFilteredToDos(filterToDosByTag(toDos.filter((todo) => formatDate(todo.createdAt) === formatActualDate)));
-        console.log("Today");
+        setFilteredToDos(toDos.filter((todo) => todo.dueDate === actualDate));
         break;
       case "pending":
-        setFilteredToDos(toDos.filter((todo) => todo.done === false))
-        console.log("Pending")
+        setFilteredToDos(toDos.filter((todo) => todo.done === false));
         break;
-      case "finished":
-        setFilteredToDos(toDos.filter((todo) => todo.done === true))
-        console.log("Finished")
+      case "done":
+        setFilteredToDos(toDos.filter((todo) => todo.done === true));
         break;
       default:
-        setFilteredToDos(toDos);
-        console.log("nada")
+        setFilteredToDos(toDos.filter((todo) => todo.dueDate === actualDate));
     }
-  }, [toDos, toDoFilter])
-
-  const filterToDosByTag = (toDos) => {
-    return toDos.filter((todo) => todo.tags.includes(tagFilter));
-  }
-
-  // useEffect(() => {
-  // setFilteredToDos();
-  // }, [toDos, tagFilter])
+  }, [toDos, toDoFilter, actualDate, filterToDosByTag])
 
   return (
     <section className="to-do-board">
-      {console.log(toDos)}
-      {filteredToDos.map((todo) => {
+      {filterToDosByTag(filteredToDos).map((todo) => {
         return (
           <ToDo
             toDoData={todo}

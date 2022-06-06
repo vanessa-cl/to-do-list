@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ToDoMenu from "../ToDoMenu/ToDoMenu";
-import { formatDate } from "../../Utils/utils";
 import Checkbox from "@mui/material/Checkbox";
 import CircleIcon from "@mui/icons-material/Circle";
 import { updateToDo } from "../../Services/api";
@@ -28,7 +27,7 @@ export default function ToDo({ toDoData }) {
       <div className="to-do-header">
         <h2 className="to-do-title">{title}</h2>
         <div className="to-do-aside">
-          <p className="to-do-date">{formatDate(dueDate)}</p>
+          <p className="to-do-date">{dueDate}</p>
           <ToDoMenu
             openMenu={openMenu}
             handleCloseMenu={() => handleCloseMenu()}

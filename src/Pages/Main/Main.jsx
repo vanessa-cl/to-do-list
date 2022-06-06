@@ -5,7 +5,7 @@ import ToDoBoard from "../../Components/ToDoBoard/ToDoBoard";
 import useToDos from "../../Hooks/useToDos/useToDos";
 
 export default function Main() {
-  const [toDoFilter, setToDoFilter] = useState("all");
+  const [toDoFilter, setToDoFilter] = useState("today");
   const [tagFilter, setTagFilter] = useState("");
   const [toDos, setTodos] = useState([]);
   const { allToDos } = useToDos();
@@ -15,7 +15,7 @@ export default function Main() {
   }, [allToDos])
 
   const cleanFilters = () => {
-    setToDoFilter("all");
+    setToDoFilter("today");
     setTagFilter("");
   }
 
@@ -35,6 +35,7 @@ export default function Main() {
           toDos={toDos}
           toDoFilter={toDoFilter}
           tagFilter={tagFilter}
+          cleanFilters={() => cleanFilters()}
         />
       </main>
     </>
